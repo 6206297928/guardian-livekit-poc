@@ -36,12 +36,6 @@ npm run dev
 Open your browser and navigate to:
 http://localhost:3000
 
-4.Security Configuration
-
-Ensure your backend/.env file is present and configured with the following development credentials to match the livekit.yaml:
-LIVEKIT_API_KEY=devkey
-LIVEKIT_API_SECRET=secret
-LIVEKIT_URL=ws://livekit-server:7880
 
 Technical Architecture
 
