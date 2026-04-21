@@ -24,6 +24,31 @@ A professional, production-ready communication portal designed to replace legacy
 └── frontend/               # Next.js 15 Dashboard
 
 1. Infrastructure Setup
-
 In the root directory, run the following to build and start the Media Engine and Backend services:
 docker compose up --build
+
+2. Frontend Setup
+In a separate terminal, navigate to the frontend/ directory and run:
+npm install
+npm run dev
+
+3. Access the Portal
+Open your browser and navigate to:
+http://localhost:3000
+
+4.Security Configuration
+
+Ensure your backend/.env file is present and configured with the following development credentials to match the livekit.yaml:
+LIVEKIT_API_KEY=devkey
+LIVEKIT_API_SECRET=secret
+LIVEKIT_URL=ws://livekit-server:7880
+
+Technical Architecture
+
+    Frontend: Next.js 15, Tailwind CSS, LiveKit React Components.
+
+    Backend: FastAPI (Python 3.11), Uvicorn.
+
+    Media Engine: LiveKit SFU (WebRTC).
+
+    Orchestration: Docker Compose.
