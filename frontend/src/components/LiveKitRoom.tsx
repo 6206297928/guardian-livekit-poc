@@ -23,29 +23,25 @@ export default function GuardianRoom({ token }: { token: string }) {
         data-lk-theme="default"
         className="flex-1 flex flex-col"
       >
-        {/* Header Section - Icons and badges removed */}
-        <header className="p-5 bg-white border-b border-slate-100 flex justify-between items-center z-10">
+        {/* Simple Header - Removed tags */}
+        <header className="p-5 flex justify-between items-center z-20 border-b border-slate-100 bg-white">
           <h2 className="text-lg font-bold text-slate-800 tracking-tight">
             Guardian Secure Session
           </h2>
-          <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-            Identity Verified
-          </div>
         </header>
 
-        {/* Main Interface */}
-        <div className="flex-1 flex overflow-hidden relative bg-slate-50">
+        {/* Layout Container */}
+        <div className="flex-1 flex overflow-hidden relative bg-white">
           <main className="flex-1 relative p-6">
             <VideoLayout />
           </main>
 
-          {/* Chat Sidebar - Fixed cropping and removed header icon */}
-          <aside className="w-80 bg-white border-l border-slate-100 flex flex-col h-full">
-            <div className="p-4 border-b border-slate-50 text-slate-600 text-sm font-bold uppercase tracking-tight">
-              Secure Intelligence Feed
+          {/* Secure Sidebar */}
+          <aside className="w-80 flex flex-col h-full shrink-0 z-10 border-l border-slate-100 bg-white overflow-hidden">
+            <div className="p-4 text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em]">
+              Intelligence Feed
             </div>
-            {/* The wrapper below ensures the Chat component fills the space without cropping */}
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 min-h-0 flex flex-col pb-2 overflow-hidden">
               <Chat />
             </div>
           </aside>
@@ -53,8 +49,7 @@ export default function GuardianRoom({ token }: { token: string }) {
 
         <RoomAudioRenderer />
 
-        {/* Control Bar */}
-        <div className="p-6 bg-white border-t border-slate-100 z-10">
+        <div className="p-6 bg-white border-t border-slate-100 z-20">
            <ControlBar variation="minimal" />
         </div>
       </LiveKitRoom>
@@ -63,10 +58,14 @@ export default function GuardianRoom({ token }: { token: string }) {
 }
 
 function VideoLayout() {
-  const tracks = useTracks([{ source: Track.Source.Camera, withPlaceholder: true }], { onlySubscribed: false });
+  const tracks = useTracks(
+    [{ source: Track.Source.Camera, withPlaceholder: true }],
+    { onlySubscribed: false }
+  );
+
   return (
     <GridLayout tracks={tracks} className="h-full">
-      <ParticipantTile className="rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all" />
+      <ParticipantTile className="rounded-2xl overflow-hidden border-4 border-slate-50 shadow-sm transition-all" />
     </GridLayout>
   );
 }

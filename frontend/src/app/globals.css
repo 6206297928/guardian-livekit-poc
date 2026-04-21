@@ -2,47 +2,114 @@
 
 @theme {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui;
-  --color-brand-blue: #2563eb;
 }
 
 :root {
-  --background: #f8fafc;
+  --background: #ffffff;
   --foreground: #0f172a;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
+  font-family: var(--font-sans);
 }
 
-/* Polishing the LiveKit components */
+/* --- LIVEKIT COMPONENT POLISHING --- */
+
 .lk-video-conference {
-  background-color: #f1f5f9 !important;
+  background-color: #ffffff !important;
 }
 
 .lk-control-bar {
   background-color: #ffffff !important;
-  border-top: 1px solid #e2e8f0 !important;
-}
-
-/* Fix Chat container and ensure text is visible */
-.lk-chat {
-  background-color: transparent !important;
-  height: 100% !important;
-}
-
-.lk-chat-form {
   border-top: 1px solid #f1f5f9 !important;
   padding: 1rem !important;
 }
 
-.lk-chat-form-input {
-  background-color: #f8fafc !important;
+/* --- CHAT CONTAINER & BORDERS --- */
+
+.lk-chat {
+  background-color: #ffffff !important;
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  border: 1px solid #e2e8f0 !important;
   border-radius: 0.75rem !important;
+  margin: 0 0.5rem 0.5rem 0.5rem !important;
+  overflow: hidden !important;
+  width: auto !important; /* Allow it to respect the sidebar width */
+}
+
+.lk-chat-messages {
+  background-color: #fcfdfe !important;
+  padding: 1rem !important;
+  flex: 1 !important;
+}
+
+/* --- CHAT BUBBLES --- */
+
+.lk-chat-entry {
+  max-width: 90% !important;
+  margin-bottom: 1rem !important;
+}
+
+.lk-chat-entry[data-lk-self="true"] .lk-message-body {
+  background-color: #3730a3 !important;
+  color: #ffffff !important;
+  border-radius: 0.75rem 0.75rem 0 0.75rem !important;
+  padding: 0.6rem 0.8rem !important;
+}
+
+.lk-chat-entry[data-lk-self="false"] .lk-message-body {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border-radius: 0.75rem 0.75rem 0.75rem 0 !important;
+  padding: 0.6rem 0.8rem !important;
   border: 1px solid #e2e8f0 !important;
 }
 
-/* Remove default dark background from LiveKit message list */
-.lk-chat-messages {
-  background-color: white !important;
+.lk-message-sender {
+  color: #1e293b !important;
+  font-weight: 700 !important;
+  font-size: 0.75rem !important;
+  opacity: 1 !important;
+}
+
+/* --- INPUT AREA & SEND BUTTON FIX --- */
+
+.lk-chat-form {
+  background-color: #ffffff !important;
+  border-top: 1px solid #e2e8f0 !important;
+  padding: 0.75rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 0.5rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.lk-chat-form-input {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 0.5rem !important;
+  padding: 0.5rem 0.75rem !important;
+  flex: 1 !important; /* Take remaining space */
+  min-width: 0 !important; /* Critical to prevent horizontal pushing */
+  max-width: calc(100% - 80px) !important; /* Ensure space for button */
+}
+
+.lk-button.lk-chat-form-button {
+  background-color: #3730a3 !important;
+  color: white !important;
+  font-weight: 600 !important;
+  border-radius: 0.5rem !important;
+  height: 38px !important;
+  padding: 0 0.75rem !important;
+  flex-shrink: 0 !important; /* DO NOT LET THIS SHRINK */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
