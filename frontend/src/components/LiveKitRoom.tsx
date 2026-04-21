@@ -8,60 +8,53 @@ import {
   RoomAudioRenderer,
   useTracks,
   Chat,
-  ChatToggle, // New: Allows opening/closing the chat
 } from "@livekit/components-react";
 import "@livekit/components-styles";
 import { Track } from "livekit-client";
-import { MessageSquare, ShieldCheck } from "lucide-react";
 
 export default function GuardianRoom({ token }: { token: string }) {
   return (
-    <div className="h-screen w-full bg-slate-50 flex flex-col font-sans overflow-hidden">
+    <div className="h-screen w-full bg-white flex flex-col font-sans overflow-hidden">
       <LiveKitRoom
         video={true}
         audio={true}
         token={token}
-        serverUrl="ws://localhost:7880" // Note: For Vercel demo, you'll eventually use a Cloud URL
+        serverUrl="ws://localhost:7880"
         data-lk-theme="default"
         className="flex-1 flex flex-col"
       >
-        {/* Header Section */}
-        <header className="p-4 bg-white border-b border-slate-200 flex justify-between items-center z-10 shadow-sm">
-          <div className="flex items-center gap-3">
-            <div className="bg-blue-600 p-1.5 rounded-lg text-white">
-              <ShieldCheck size={20} />
-            </div>
-            <h2 className="font-bold text-slate-800 tracking-tight">Guardian Secure Session</h2>
-          </div>
-
-          <div className="flex items-center gap-4">
-             <div className="flex items-center gap-2 px-3 py-1 bg-green-50 border border-green-100 rounded-full">
-              <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-[10px] font-bold text-green-700 uppercase tracking-widest">Secure Link</span>
-            </div>
+        {/* Header Section - Icons and badges removed */}
+        <header className="p-5 bg-white border-b border-slate-100 flex justify-between items-center z-10">
+          <h2 className="text-lg font-bold text-slate-800 tracking-tight">
+            Guardian Secure Session
+          </h2>
+          <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+            Identity Verified
           </div>
         </header>
 
-        {/* Main Interface: Video & Chat Sidebar */}
-        <div className="flex-1 flex overflow-hidden relative bg-slate-100">
-          <main className="flex-1 relative p-4">
+        {/* Main Interface */}
+        <div className="flex-1 flex overflow-hidden relative bg-slate-50">
+          <main className="flex-1 relative p-6">
             <VideoLayout />
           </main>
 
-          {/* Lucrative Sidebar for Chat */}
-          <aside className="w-85 bg-white border-l border-slate-200 flex flex-col shadow-[-4px_0_15px_rgba(0,0,0,0.02)]">
-            <div className="p-4 border-b border-slate-100 flex items-center gap-2 text-slate-800 font-semibold">
-              <MessageSquare size={18} className="text-blue-600" />
+          {/* Chat Sidebar - Fixed cropping and removed header icon */}
+          <aside className="w-80 bg-white border-l border-slate-100 flex flex-col h-full">
+            <div className="p-4 border-b border-slate-50 text-slate-600 text-sm font-bold uppercase tracking-tight">
               Secure Intelligence Feed
             </div>
-            <Chat />
+            {/* The wrapper below ensures the Chat component fills the space without cropping */}
+            <div className="flex-1 overflow-y-auto">
+              <Chat />
+            </div>
           </aside>
         </div>
 
         <RoomAudioRenderer />
 
-        {/* Control Bar with extra styling */}
-        <div className="p-4 bg-white border-t border-slate-200 z-10 shadow-[0_-4px_10px_rgba(0,0,0,0.03)]">
+        {/* Control Bar */}
+        <div className="p-6 bg-white border-t border-slate-100 z-10">
            <ControlBar variation="minimal" />
         </div>
       </LiveKitRoom>
@@ -73,7 +66,7 @@ function VideoLayout() {
   const tracks = useTracks([{ source: Track.Source.Camera, withPlaceholder: true }], { onlySubscribed: false });
   return (
     <GridLayout tracks={tracks} className="h-full">
-      <ParticipantTile className="rounded-3xl overflow-hidden border-8 border-white shadow-2xl transition-all hover:scale-[1.01]" />
+      <ParticipantTile className="rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all" />
     </GridLayout>
   );
 }

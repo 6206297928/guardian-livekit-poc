@@ -24,3 +24,25 @@ body {
   background-color: #ffffff !important;
   border-top: 1px solid #e2e8f0 !important;
 }
+
+/* Fix Chat container and ensure text is visible */
+.lk-chat {
+  background-color: transparent !important;
+  height: 100% !important;
+}
+
+.lk-chat-form {
+  border-top: 1px solid #f1f5f9 !important;
+  padding: 1rem !important;
+}
+
+.lk-chat-form-input {
+  background-color: #f8fafc !important;
+  border-radius: 0.75rem !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+/* Remove default dark background from LiveKit message list */
+.lk-chat-messages {
+  background-color: white !important;
+}
