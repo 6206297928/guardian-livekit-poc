@@ -4,3 +4,5 @@ __pycache__/
 .venv/
 .env*
 *.pyc
+github_pat.txt
+*.txt
