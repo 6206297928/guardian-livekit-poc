@@ -1,12 +1,29 @@
 services:
-  livekit:
+  # --- MODULE 1: MEDIA ENGINE ---
+  livekit-server:
     image: livekit/livekit-server:latest
     container_name: guardian-livekit-server
-    command: --config /livekit.yaml --dev
-    volumes:
-      - ./livekit.yaml:/livekit.yaml
+    command: --config /etc/livekit.yaml
     ports:
       - "7880:7880"
       - "7881:7881"
       - "50000-50050:50000-50050/udp"
+    volumes:
+      - ./livekit.yaml:/etc/livekit.yaml
+    restart: always
+
+  # --- MODULE 2: INTELLIGENCE LAYER ---
+  guardian-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: guardian-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/uploads:/app/uploads
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - livekit-server
     restart: always

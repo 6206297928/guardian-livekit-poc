@@ -8,11 +8,16 @@ import {
   RoomAudioRenderer,
   useTracks,
   Chat,
-  useChat, // Needed to send the file link
+  useChat,
 } from "@livekit/components-react";
 import "@livekit/components-styles";
 import { Track } from "livekit-client";
 import { Paperclip } from "lucide-react";
+
+// --- DYNAMIC CONFIGURATION ---
+// These default to localhost so your boss doesn't have to change anything
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+const LIVEKIT_URL = process.env.NEXT_PUBLIC_LIVEKIT_URL || "ws://localhost:7880";
 
 export default function GuardianRoom({ token }: { token: string }) {
   return (
@@ -21,7 +26,8 @@ export default function GuardianRoom({ token }: { token: string }) {
         video={true}
         audio={true}
         token={token}
-        serverUrl="ws://localhost:7880"
+        serverUrl={LIVEKIT_URL}
+        connect={true}
         data-lk-theme="default"
         className="flex-1 flex flex-col"
       >
@@ -41,7 +47,6 @@ export default function GuardianRoom({ token }: { token: string }) {
               <span className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em]">
                 Intelligence Feed
               </span>
-              {/* --- New File Action Button --- */}
               <FileAttachmentButton />
             </div>
             <div className="flex-1 min-h-0 flex flex-col pb-2 overflow-hidden">
@@ -51,6 +56,7 @@ export default function GuardianRoom({ token }: { token: string }) {
         </div>
 
         <RoomAudioRenderer />
+
         <div className="p-6 bg-white border-t border-slate-100 z-20">
            <ControlBar variation="minimal" />
         </div>
@@ -73,7 +79,7 @@ function FileAttachmentButton() {
       formData.append("file", file);
 
       try {
-        const response = await fetch("http://localhost:8000/upload-secure-file", {
+        const response = await fetch(`${BACKEND_URL}/upload-secure-file`, {
           method: "POST",
           body: formData,
         });
@@ -104,7 +110,26 @@ function FileAttachmentButton() {
 }
 
 function VideoLayout() {
-  const tracks = useTracks([{ source: Track.Source.Camera, withPlaceholder: true }], { onlySubscribed: false });
+  const tracks = useTracks(
+    [
+      { source: Track.Source.Camera, withPlaceholder: true },
+      { source: Track.Source.ScreenShare, withPlaceholder: false },
+    ],
+    {
+      onlySubscribed: false,
+      updateOnlyOnChanges: true
+    }
+  );
+
+  if (tracks.length === 0) {
+    return (
+      <div className="h-full flex flex-col items-center justify-center space-y-4 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
+        <div className="w-12 h-12 rounded-full bg-slate-200 animate-pulse" />
+        <p className="text-slate-400 text-sm font-medium">Awaiting encrypted feed...</p>
+      </div>
+    );
+  }
+
   return (
     <GridLayout tracks={tracks} className="h-full">
       <ParticipantTile className="rounded-2xl overflow-hidden border-4 border-slate-50 shadow-sm" />
