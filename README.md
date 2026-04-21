@@ -1,0 +1,29 @@
+# Guardian Secure Session
+
+A professional, production-ready communication portal designed to replace legacy SIP/VOIP systems. Guardian utilizes a modern **Selective Forwarding Unit (SFU)** architecture via LiveKit for ultra-low latency media, integrated with a **FastAPI Intelligence Layer** for secure identity management and mediated file sharing.
+
+##  Key Features
+
+- **Encrypted Media:** Ultra-low latency voice/video streams powered by LiveKit SFU.
+- **Intelligence Feed:** Real-time data channels for secure messaging and system updates.
+- **Mediated File Relay:** Secure file sharing through a FastAPI backend that acts as a security gatekeeper.
+- **Full Containerization:** One-click deployment using Docker and Docker Compose.
+- **Modern UI:** Built with Next.js 15, Tailwind CSS, and Lucide Icons for a premium experience.
+
+##  Project Structure
+
+```text
+.
+├── docker-compose.yml      # Unified stack orchestrator
+├── livekit.yaml            # Media server configuration
+├── backend/                # Intelligence Layer (Python/FastAPI)
+│   ├── Dockerfile          # Backend containerization
+│   ├── .env                # Security credentials
+│   ├── uploads/            # Secure mediated file storage
+│   └── app/                # Main logic & Token services
+└── frontend/               # Next.js 15 Dashboard
+
+1. Infrastructure Setup
+
+In the root directory, run the following to build and start the Media Engine and Backend services:
+docker compose up --build
